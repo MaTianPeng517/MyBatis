@@ -23,6 +23,6 @@
 
     <!-- 连接小配置  xx.xml-->
     <mappers>
-        <mapper resource="cn\msss\dao\UsersDao.xml"></mapper>
+        <mapper resource="cn/msss/dao/UsersDao.xml"></mapper>
     </mappers>
 </configuration>

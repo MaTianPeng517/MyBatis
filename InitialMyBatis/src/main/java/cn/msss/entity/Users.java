@@ -1,6 +1,8 @@
 package cn.msss.entity;
 
-public class Users {
+import java.io.Serializable;
+
+public class Users implements Serializable{
 
     private Integer user_id;
     private String user_name;

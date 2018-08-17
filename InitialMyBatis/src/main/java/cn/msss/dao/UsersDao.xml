@@ -5,8 +5,29 @@
 
 <mapper namespace="cn.msss.dao.UsersDao">
 
+    <!--添加-->
     <insert id="addUser" parameterType="cn.msss.entity.Users">
         INSERT INTO  users (`user_name`,`user_password`) VALUES(#{user_name},#{user_password});
     </insert>
+
+    <!--查询-->
+    <select id="query" resultType="cn.msss.entity.Users">
+        SELECT `user_id`,`user_name`,`user_password`,`user_file` FROM `users`
+    </select>
+
+    <!--查询条件-->
+    <select id="selectUser" resultType="cn.msss.entity.Users">
+        SELECT `user_id`,`user_name`,`user_password`,`user_file` FROM `users` WHERE `user_id`=#{user_id}
+    </select>
+
+    <!--修改-->
+    <update id="updeteUser" parameterType="cn.msss.entity.Users">
+        UPDATE `users` SET `user_name`=#{user_name},`user_password`=#{user_password},`user_file`=#{user_file} WHERE `user_id`=#{user_id}
+    </update>
+
+    <!--删除-->
+    <delete id="deleteUser" parameterType="cn.msss.entity.Users">
+        DELETE FROM `users` WHERE `user_id`=#{user_id}
+    </delete>
 
 </mapper>
