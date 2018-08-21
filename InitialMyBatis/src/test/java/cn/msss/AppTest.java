@@ -11,7 +11,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -40,7 +42,7 @@ public class AppTest
     @Test
     public void addUser(){
         Users users=new Users();
-        users.setUser_name("Tina");
+        users.setUser_name("呵呵");
         users.setUser_password("123456");
         boolean b = mapper.addUser(users);
         if (b){
@@ -48,6 +50,7 @@ public class AppTest
         }else {
             System.out.println("失败");
         }
+        System.out.println(users.getUser_id());
     }
     /**
      *删除操作
@@ -78,7 +81,7 @@ public class AppTest
     @Test
     public void selectUser(){
         Users users=new Users();
-        users.setUser_id(33);
+        users.setUser_id(34);
         List<Users> list = mapper.selectUser(users);
         System.out.println(list);
     }
@@ -98,5 +101,69 @@ public class AppTest
         }else {
             System.out.println("失败");
         }
+    }
+    /**
+     * Map
+     */
+    @Test
+    public void usersMap(){
+        Map<String,Object> map=new HashMap<String,Object>();
+        Users userss=new Users();
+        userss.setUser_name("Tina");
+        userss.setUser_password("123456");
+        map.put("users",userss);
+        Users users = mapper.usersMap(map);
+        System.out.println(users);
+    }
+    /**
+     *下标
+     */
+    @Test
+    public void subscript(){
+        List<Users> tina = mapper.subscript("Tina", "123456");
+        System.out.println(tina);
+    }
+    /**
+     *注解
+     */
+    @Test
+    public void annotation(){
+        List<Users> tina = mapper.annotation("Tina", "123456");
+        System.out.println(tina);
+    }
+    /**
+     * 动态查询
+     */
+    @Test
+    public void dynamic(){
+        Users users=new Users();
+        users.setUser_password("123456");
+        List<Users> dynamic = mapper.dynamic(users);
+        System.out.println(dynamic);
+    }
+    /**
+     * 动态修改
+     */
+    @Test
+    public void modifySet(){
+        Users users=new Users();
+        users.setUser_id(43);
+        users.setUser_name("嘿嘿");
+        users.setUser_password("456789");
+        users.setUser_file("随便");
+        int i = mapper.modifySet(users);
+        System.out.println(i);
+    }
+    /**
+     * 根据用户传递的参数，执行sql
+     */
+    @Test
+    public void chooseTransmit(){
+        Users users=new Users();
+        //users.setUser_id(1);
+        //users.setUser_name("");
+       // users.setUser_password("");
+        users.setUser_file("随便");
+        mapper.chooseTransmit(users);
     }
 }

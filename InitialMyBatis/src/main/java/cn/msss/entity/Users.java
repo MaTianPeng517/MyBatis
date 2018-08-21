@@ -5,13 +5,13 @@ import java.io.Serializable;
 public class Users implements Serializable{
 
     private Integer user_id;
-    private String user_name;
+    private String name;
     private String user_password;
     private String user_file;
 
-    public Users(Integer user_id, String user_name, String user_password, String user_file) {
+    public Users(Integer user_id, String name, String user_password, String user_file) {
         this.user_id = user_id;
-        this.user_name = user_name;
+        this.name = name;
         this.user_password = user_password;
         this.user_file = user_file;
     }
@@ -23,7 +23,7 @@ public class Users implements Serializable{
     public String toString() {
         return "Users{" +
                 "user_id=" + user_id +
-                ", user_name='" + user_name + '\'' +
+                ", user_name='" + name + '\'' +
                 ", user_password='" + user_password + '\'' +
                 ", user_file='" + user_file + '\'' +
                 '}';
@@ -38,11 +38,11 @@ public class Users implements Serializable{
     }
 
     public String getUser_name() {
-        return user_name;
+        return name;
     }
 
     public void setUser_name(String user_name) {
-        this.user_name = user_name;
+        this.name = user_name;
     }
 
     public String getUser_password() {

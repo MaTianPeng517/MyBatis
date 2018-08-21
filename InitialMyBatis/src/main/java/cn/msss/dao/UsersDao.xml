@@ -5,19 +5,51 @@
 
 <mapper namespace="cn.msss.dao.UsersDao">
 
+    <!--使用resultMap设置-->
+    <resultMap id="resultMap" type="cn.msss.entity.Users">
+        <id property="user_id" column="user_id"></id>
+        <result property="name" column="user_name"></result>
+        <result property="user_password" column="user_password"></result>
+        <result property="user_file" column="user_file"></result>
+    </resultMap>
+
+
+    <sql id="UserSQL">
+       SELECT `user_id`,`user_name`,`user_password`,`user_file` FROM `users`
+    </sql>
+
     <!--添加-->
+    <!--主键回填-->
     <insert id="addUser" parameterType="cn.msss.entity.Users">
         INSERT INTO  users (`user_name`,`user_password`) VALUES(#{user_name},#{user_password});
+        <selectKey resultType="int" keyProperty="user_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <!--查询-->
-    <select id="query" resultType="cn.msss.entity.Users">
-        SELECT `user_id`,`user_name`,`user_password`,`user_file` FROM `users`
+    <select id="query" resultMap="resultMap">
+        <include refid="UserSQL"></include>
     </select>
 
     <!--查询条件-->
-    <select id="selectUser" resultType="cn.msss.entity.Users">
-        SELECT `user_id`,`user_name`,`user_password`,`user_file` FROM `users` WHERE `user_id`=#{user_id}
+    <select id="selectUser" resultMap="resultMap">
+        <include refid="UserSQL"></include> WHERE `user_id`=#{user_id}
+    </select>
+
+    <!--查询Map-->
+    <select id="usersMap" resultMap="resultMap">
+        <include refid="UserSQL"></include> WHERE `user_name`=#{user.name} AND `user_password`=#{user.user_password}
+    </select>
+
+    <!--查询注解-->
+    <select id="annotation" resultMap="resultMap">
+        <include refid="UserSQL"></include> WHERE `user_name`=#{name} AND `user_password`=#{password}
+    </select>
+
+    <!--查询下标-->
+    <select id="subscript" resultMap="resultMap">
+        <include refid="UserSQL"></include> WHERE `user_name`=#{0} AND `user_password`=#{1}
     </select>
 
     <!--修改-->
@@ -30,4 +62,60 @@
         DELETE FROM `users` WHERE `user_id`=#{user_id}
     </delete>
 
+    <!--sql之动态查询-->
+    <select id="dynamic" resultMap="resultMap">
+        <include refid="UserSQL"></include>
+        <trim prefix="where" prefixOverrides="and | or">
+            <if test="name!=null and name!=''">
+                AND user_name LIKE concat('%',#{name},'%')
+            </if>
+            <if test="user_password!=null and user_password!=''">
+                AND user_password=#{user_password}
+            </if>
+        </trim>
+    </select>
+
+    <!--修改SQL测试-->
+    <sql id="UserUpdate">
+        UPDATE `users`
+    </sql>
+    <!--sql之动态修改-->
+    <update id="modifySet" parameterType="cn.msss.entity.Users" >
+        <include refid="UserUpdate"></include>
+        <trim prefix="set" suffixOverrides=",">
+            <if test="name!=null and name!=''">
+                user_name=#{name},
+            </if>
+            <if test="user_password!=null and user_password!=''">
+                user_password=#{user_password},
+            </if>
+            <if test="user_file!=null and user_file!=''">
+                user_file=#{user_file},
+            </if>
+        </trim>
+            <where>
+              user_id=#{user_id}
+            </where>
+    </update>
+
+    <!--根据用户传递的参数，执行sql-->
+    <select id="chooseTransmit" resultMap="resultMap">
+      <include refid="UserSQL"></include>
+        <trim prefix="where" prefixOverrides="and | or">
+            <choose>
+                <when test="name!=null and name!=''">
+                    AND user_named LIKE concat('%',#{name},'%')
+                </when>
+                <when test="user_password!=null and user_password!=''">
+                    AND user_password=#{user_password}
+                </when>
+                <when test="user_file!=null and user_file!=''">
+                    AND user_file LIKE concat('%',#{user_file},'%')
+                </when>
+                <otherwise>
+                    user_id=#{user_id}
+                </otherwise>
+            </choose>
+        </trim>
+    </select>
 </mapper>
