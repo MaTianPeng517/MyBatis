@@ -118,4 +118,81 @@
             </choose>
         </trim>
     </select>
+
+    <!--1.查询遍历-数组-->
+    <select id="array" resultMap="resultMap">
+        <include refid="UserSQL"></include>
+        <where>
+            <if test="array.length>0">
+                user_id IN
+                <foreach collection="array" item="array" open="(" close=")" separator=",">
+                    #{array}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!--1.List单一-->
+    <select id="ergodic" resultMap="resultMap">
+      <include refid="UserSQL"></include>
+        <where>
+            <if test="list.size>0">
+                user_id  in
+                <foreach collection="list" open="(" close=")" separator=","  item="user_id">
+                    #{user_id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!--1.List对象-->
+    <select id="target" resultMap="resultMap">
+        <include refid="UserSQL"></include>
+        <where>
+            <if test="list.size>0">
+                user_id  in
+                <foreach collection="list"  open="(" close=")"   separator=","  item="users">
+                    #{users.user_id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!--1.Map   key-->
+    <select id="key" resultMap="resultMap">
+        <include refid="UserSQL"></include>
+        <where>
+            <if test="mapkey.keys.size>0">
+                user_id in
+              <foreach collection="mapkey.keys" item="key" open="(" close=")" separator=",">
+                  #{key}
+              </foreach>
+            </if>
+        </where>
+    </select>
+    <!--1.Map   value-->
+    <select id="value" resultMap="resultMap">
+        <include refid="UserSQL"></include>
+        <where>
+            <if test="mapvalue.keys.size>0">
+                user_id in
+                <foreach collection="mapvalue.keys" item="value" open="(" close=")" separator=",">
+                   #{mapvalue[${value}]}
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <!--1.Map   对象-->
+    <select id="maptarget" resultMap="resultMap">
+        <include refid="UserSQL"></include>
+        <where>
+            <if test="maptarget.keys.size>0">
+                user_id in
+                <foreach collection="maptarget.keys" item="mapuser" open="(" close=")" separator=",">
+                   #{maptarget[${mapuser}].user_id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
 </mapper>

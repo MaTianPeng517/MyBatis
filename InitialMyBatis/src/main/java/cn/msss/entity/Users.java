@@ -19,6 +19,10 @@ public class Users implements Serializable{
     public Users() {
     }
 
+    public Users(int i) {
+        user_id=i;
+    }
+
     @Override
     public String toString() {
         return "Users{" +

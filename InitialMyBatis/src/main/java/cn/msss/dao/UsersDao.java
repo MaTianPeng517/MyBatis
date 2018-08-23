@@ -32,4 +32,18 @@ public interface UsersDao {
     //根据用户传递的参数，执行sql
     public List<Users> chooseTransmit(Serializable chooseTransmit);
 
+    //1.查询遍历-数组
+    public List<Users> array(Integer [] array);
+
+    //LIst方式1.单一
+    public List<Users> ergodic(List<Integer> id);
+    //LIst方式2.对象
+    public List<Users> target (List<Users> list);
+
+    //Map key
+    public List<Users> key(@Param("mapkey")Map<String,Integer> map);
+    //Map value
+    public List<Users> value(@Param("mapvalue")Map<String,Integer> map);
+    //Map 对象
+    public List<Users> maptarget(@Param("maptarget")Map<String,Users> map);
 }

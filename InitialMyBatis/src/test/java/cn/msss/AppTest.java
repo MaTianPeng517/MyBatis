@@ -11,10 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Unit test for simple App.
@@ -165,5 +162,74 @@ public class AppTest
        // users.setUser_password("");
         users.setUser_file("随便");
         mapper.chooseTransmit(users);
+    }
+    /**
+     * LIst foreach遍历查询 单一
+     */
+    @Test
+    public void ergodic(){
+        List<Integer> list=new ArrayList<>();
+        list.add(41);
+        list.add(43);
+        List<Users> ergodic = mapper.ergodic(list);
+        System.out.println(ergodic);
+    }
+    /**
+     * LIst foreach遍历查询 对象
+     */
+    @Test
+    public void target(){
+        List<Users> list=new ArrayList<>();
+        Users users=new Users(41);
+        Users userss=new Users(43);
+        list.add(users);
+        list.add(userss);
+        List<Users> target = mapper.target(list);
+        System.out.println(target);
+    }
+
+    /**
+     * 使用key
+     */
+    @Test
+    public void key(){
+        Map<String,Integer> map=new HashMap<>();
+        map.put("41",41);
+        map.put("43",43);
+        List<Users> key = mapper.key(map);
+        System.out.println(key);
+    }
+    /**
+     *使用value
+     */
+    @Test
+    public void value(){
+        Map<String,Integer> map=new HashMap<>();
+        map.put("41",41);
+        map.put("43",43);
+        List<Users> value = mapper.value(map);
+        System.out.println(value);
+    }
+    /**
+     *使用对象
+     */
+    @Test
+    public void maptarget(){
+        Map<String,Users> map=new HashMap<>();
+        Users u1=new Users(41);
+        Users u2=new Users(43);
+        map.put("41",u1);
+        map.put("43",u2);
+        List<Users> maptarget = mapper.maptarget(map);
+        System.out.println(maptarget);
+    }
+    /**
+     * 数组遍历查询
+     */
+    @Test
+    public void array(){
+        Integer [] in={41,43};
+        List<Users> array = mapper.array(in);
+        System.out.println(array);
     }
 }
