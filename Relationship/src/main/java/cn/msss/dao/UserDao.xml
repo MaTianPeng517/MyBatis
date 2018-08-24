@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msss.dao.CountryMapper">
+
+    <!--一对多-->
+    <resultMap id="rmp" type="cn.msss.entity.Country">
+        <id property="cid" column="cid"></id>
+        <result property="cname" column="cname"></result>
+        <collection property="provincialSet" ofType="cn.msss.entity.Provincial">
+            <id property="pid" column="pid"></id>
+            <result property="pname" column="pname"></result>
+        </collection>
+    </resultMap>
+
+    <sql id="CadnP">
+        SELECT `cid`,`cname`,`pid`,`pname` FROM `country` c,`provincial` p
+    </sql>
+
+    <select id="" resultMap="rmp">
+        <include refid="CadnP"></include>
+        <where>
+            c.`cid`=p.`p_cid` AND c.`cid`=#{id}
+        </where>
+    </select>
+
+
+
+    <!--延迟加载-->
+    <sql id="crm">
+        SELECT `cid`,`cname` FROM `country` c
+    </sql>
+    <sql id="prm">
+      SELECT `pid`,`pname`,`p_cid` FROM `provincial` p
+    </sql>
+
+    <resultMap id="cmp" type="cn.msss.entity.Country">
+        <id property="cid" column="cid"></id>
+        <result property="cname" column="cname"></result>
+        <collection property="provincialSet" ofType="cn.msss.entity.Provincial" select="countryP" column="cid">
+        </collection>
+    </resultMap>
+
+    <select id="countrySE" resultMap="cmp">
+        <include refid="crm"></include>
+        <where>
+            c.`cid`=#{id}
+        </where>
+    </select>
+
+    <select id="countryP" resultType="cn.msss.entity.Provincial">
+        <include refid="prm"></include>
+        <where>
+            p.`p_cid`=#{id}
+        </where>
+    </select>
+</mapper>
