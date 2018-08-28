@@ -35,6 +35,6 @@
 
     <!-- 连接小配置  xx.xml-->
     <mappers>
-        <mapper resource="cn/msss/dao/UserDao.xml"></mapper>
+        <mapper resource="cn/msss/dao/MultiDao.xml"></mapper>
     </mappers>
 </configuration>

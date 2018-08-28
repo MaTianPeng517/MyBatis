@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msss.dao.TransactionDao">
+
+
+    <!--开启2级缓存-->
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache" readOnly="true" flushInterval="5000"></cache>
+
+    <resultMap id="Tid" type="cn.msss.entity.Transaction">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="money" column="money"></result>
+    </resultMap>
+
+    <sql id="TidSql">
+        SELECT id,`name`,`money` FROM `transaction`
+    </sql>
+
+    <!--把查询的数据放进2级缓存 useCache="true" ：查询数据是使用-->
+    <select id="cache" resultMap="Tid" useCache="true">
+      <include refid="TidSql"></include>
+        <where>
+            id=#{id}
+        </where>
+    </select>
+
+    <!--flushCache="true":增删改使用，true：清空缓存，false：不清空缓存，不推荐啊 -->
+    <update id="" parameterType="cn.msss.entity.Transaction" flushCache="true">
+          UPDATE `transaction`
+          <set>
+              `name`=#{name},`money`=#{name}
+          </set>
+        <where>
+            `id`=#{id}
+        </where>
+    </update>
+
+</mapper>

@@ -6,14 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Cache" />
         <module name="InitialMyBatis" />
-        <module name="Relationship" />
+        <module name="Multitoone" />
+        <module name="Twosides" />
+        <module name="Twoway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Cache" target="1.7" />
       <module name="InitialMyBatis" target="1.7" />
+      <module name="Multitoone" target="1.7" />
       <module name="MyBatis" target="1.7" />
       <module name="Relationship" target="1.7" />
+      <module name="Twosides" target="1.7" />
+      <module name="Twoway" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

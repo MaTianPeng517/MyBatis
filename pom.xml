@@ -11,6 +11,9 @@
   <modules>
     <module>InitialMyBatis</module>
       <module>Relationship</module>
+      <module>Multitoone</module>
+      <module>Twosides</module>
+      <module>Cache</module>
   </modules>
 
   <name>MyBatis</name>
@@ -86,6 +89,22 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>5.1.6</version>
     </dependency>
+
+    <!--引入需要的ehcache插件-->
+    <dependency>
+      <groupId>net.sf.ehcache</groupId>
+      <artifactId>ehcache</artifactId>
+      <version>1.2.3</version>
+    </dependency>
+    <!--mybatis整合ehcache的jar-->
+    <dependency>
+      <groupId>org.mybatis</groupId>
+      <artifactId>mybatis-ehcache</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+
+
   </dependencies>
 
   <build>  <!--加载所有src下xml文件-->
@@ -98,5 +117,4 @@
       </resource>
     </resources>
   </build>
-
 </project>

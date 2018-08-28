@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msss.dao.Multi">
+
+    <!--SQL语句-->
+    <sql id="provincial">
+        SELECT `pid`,`pname`,`p_cid` FROM `provincial`
+    </sql>
+
+    <sql id="country">
+        SELECT`cid`,`cname` FROM `country`
+    </sql>
+
+    <!--xml与数据库映射文件-->
+    <resultMap id="ProvincialByID" type="cn.msss.entity.Provincials">
+        <id property="pid" column="pid"></id>
+        <result property="pname" column="pname"></result>
+        <result property="cid" column="p_cid"></result>
+        <association property="countrys" javaType="cn.msss.entity.Country" select="multiByID" column="id"></association>
+    </resultMap>
+
+    <!--语句的查询-->
+    <select id="multi" resultMap="ProvincialByID">
+        <include refid="provincial"></include>
+        <where>
+             `p_cid`=#{id}
+        </where>
+    </select>
+
+    <select id="multiByID" resultType="cn.msss.entity.Country">
+        <include refid="country"></include>
+        <where>
+            `cid`=#{id}
+        </where>
+    </select>
+
+</mapper>

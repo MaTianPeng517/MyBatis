@@ -42,5 +42,12 @@ public class Provincial implements Serializable {
         this.cid = cid;
     }
 
-
+    @Override
+    public String toString() {
+        return "Provincial{" +
+                "pid=" + pid +
+                ", pname='" + pname + '\'' +
+                ", cid=" + cid +
+                '}';
+    }
 }

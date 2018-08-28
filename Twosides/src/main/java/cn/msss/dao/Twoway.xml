@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.msss.dao.Twoway">
+
+    <!--<resultMap id="SById" type="cn.msss.entity.Student">-->
+        <!--<id property="id" column="id"></id>-->
+        <!--<result property="name" column="name"></result>-->
+        <!--<result property="sex" column="sex"></result>-->
+        <!--<result property="age" column="age"></result>-->
+        <!--&lt;!&ndash;一个学生对应多个老师&ndash;&gt;-->
+        <!--<collection property="teacher" ofType="cn.msss.entity.Teacher" >-->
+            <!--<id property="id" column="id"></id>-->
+            <!--<result property="T_name" column="T_name"></result>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+
+    <!--<select id="studentById" resultMap="SById">-->
+        <!--SELECT s.`id`,s.`name`,s.`sex`,t.`id`,t.`T_name`-->
+        <!--FROM `student` s,`teacher` t,`thirdparty` h-->
+        <!--WHERE h.`s_id`=s.`id`-->
+        <!--AND h.`t_id`=t.`t_id`-->
+        <!--AND s.`id`=#{id}-->
+    <!--</select>-->
+
+
+    <resultMap id="TByID" type="cn.msss.entity.Teacher">
+        <id property="id" column="id"></id>
+        <result property="T_name" column="T_name"></result>
+
+        <collection property="Student" ofType="cn.msss.entity.Student" >
+            <id property="id" column="id"></id>
+            <result property="name" column="name"></result>
+            <result property="sex" column="sex"></result>
+            <result property="age" column="age"></result>
+        </collection>
+    </resultMap>
+
+    <select id="teacherById" resultMap="TByID">
+        SELECT s.`id`,s.`name`,s.`sex`,t.`id`,t.`T_name`
+        FROM `student` s,`teacher` t,`thirdparty` h
+        WHERE h.`s_id`=s.`id`
+        AND h.`t_id`=t.`t_id`
+         AND t.`t_id`=#{id}
+    </select>
+</mapper>

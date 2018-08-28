@@ -11,6 +11,8 @@
     <settings>
         <setting name="lazyLoadingEnabled" value="true"></setting>
         <setting name="aggressiveLazyLoading" value="false"></setting>
+        <setting name="cacheEnabled" value="true"></setting>
+        <!--全局2级缓存配置-->
     </settings>
 
     <!--设置别名-->
@@ -35,6 +37,6 @@
 
     <!-- 连接小配置  xx.xml-->
     <mappers>
-        <mapper resource="cn/msss/dao/UserDao.xml"></mapper>
+        <mapper resource="cn/msss/dao/Transaction.xml"></mapper>
     </mappers>
 </configuration>
